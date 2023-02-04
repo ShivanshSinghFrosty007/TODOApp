@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,6 +35,7 @@ public class MainScreen extends AppCompatActivity implements ClickListiner {
     List list;
     AlertDialog.Builder dialogBuilder;
     AlertDialog dialog;
+    TextView startTxt;
 
 
     @Override
@@ -42,12 +44,11 @@ public class MainScreen extends AppCompatActivity implements ClickListiner {
         setContentView(R.layout.activity_main_screen);
 
         recyclerView = findViewById(R.id.reycleView);
+        startTxt = findViewById(R.id.start_txt);
 
         list = new ArrayList<>();
         loadData();
-        if (list.isEmpty()){
-
-        }
+        StartTxt();
         adapt = new adapter(list, this);
         recyclerView.setAdapter(adapt);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
@@ -57,6 +58,7 @@ public class MainScreen extends AppCompatActivity implements ClickListiner {
     public void onItemClick(int position) {
         list.remove(position);
         SaveData();
+        StartTxt();
         adapt.notifyDataSetChanged();
     }
 
@@ -77,6 +79,7 @@ public class MainScreen extends AppCompatActivity implements ClickListiner {
                     adapt.notifyDataSetChanged();
                     dialog.dismiss();
                     SaveData();
+                    StartTxt();
                 }
             }
         });
@@ -106,6 +109,14 @@ public class MainScreen extends AppCompatActivity implements ClickListiner {
             list.add(x);
         }
 //        adapt.notifyDataSetChanged();
+    }
+
+    public void StartTxt(){
+        if (list.isEmpty()){
+            startTxt.setVisibility(View.VISIBLE);
+        }else {
+            startTxt.setVisibility(View.INVISIBLE);
+        }
     }
 
 }
